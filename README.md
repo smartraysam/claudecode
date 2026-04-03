@@ -1,8 +1,10 @@
-# ClaudeCode
+# ClaudeCode (Open Source)
 
-ClaudeCode is an open source Anthropic Claude Code with Rust implementation. It is a local coding-agent CLI that provides an interactive agent shell, one-shot prompts, workspace-aware tools, plugin support, and resumeable sessions.
+**A high-performance, open-source AI coding agent written in Rust.**
 
-![View Count](https://komarev.com/ghpvc/?username=soongenwong&label=Total%20views&color=ffa500&style=for-the-badge)
+ClaudeCode is a terminal-native CLI agent designed to bring advanced LLM capabilities directly into your development workflow. Built for speed, safety, and efficiency, it provides an interactive agent shell, workspace-aware tools, and persistent session management. It is an independent open-source implementation inspired by Claude Code, not the official Anthropic product.
+
+![View Count](https://komarev.com/ghpvc/?username=soongenwong&label=Total+views&color=ffa500&style=for-the-badge)
 
 ## Star History
 
@@ -10,98 +12,110 @@ ClaudeCode is an open source Anthropic Claude Code with Rust implementation. It 
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=soongenwong/claudecode&type=date&theme=dark&legend=top-left" />
    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=soongenwong/claudecode&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=soongenwong/claudecode&type=date&legend=top-left" />
+   <img alt="ClaudeCode Star History" src="https://api.star-history.com/chart?repos=soongenwong/claudecode&type=date&legend=top-left" />
  </picture>
 </a>
 
-## Start here
+## Related Projects
 
-1. Install Rust stable and Cargo.
-2. Set up credentials for the model provider you want to use.
-3. Run the CLI from the `rust/` workspace.
+- [Anthropic developer docs](https://platform.claude.com/docs)
+- [Anthropic](https://www.anthropic.com/)
+- [Anthropic on X](https://x.com/AnthropicAI)
 
-## First run
+## Key Features
+
+- **Rust-powered:** Built with Rust for memory safety, minimal binary size, and high execution speed.
+- **Agentic CLI:** Interactive shell and one-shot prompt support for seamless terminal workflows.
+- **Model flexible:** Supports Anthropic-compatible and OpenAI-compatible providers, plus xAI/Grok aliases.
+- **Workspace aware:** Context-aware tools designed to understand your local codebase.
+- **Session persistence:** Resumeable sessions via JSON state management.
+- **Extensible:** Plugin-ready architecture for custom tools and skills.
+
+## Getting Started
+
+### Prerequisites
+
+1. [Install Rust](https://www.rust-lang.org/tools/install) stable and Cargo.
+2. Set up your preferred API credentials.
+
+### Installation
 
 From the repository root:
 
 ```bash
 cd rust
-```
-
-Build the CLI:
-
-```bash
 cargo build --release -p claw-cli
+
+# Install locally to your PATH for global access
+cargo install --path crates/claw-cli --locked
 ```
+
+### Usage
 
 Start the interactive shell:
 
 ```bash
-cargo run --bin claw -- --help
-cargo run --bin claw --
+claw
 ```
 
 Run a single prompt:
 
 ```bash
-cargo run --bin claw -- prompt "summarize this workspace"
+claw prompt "summarize this workspace"
 ```
 
-Install it locally if you want the binary on your `PATH`:
+Resume a previous session:
 
 ```bash
-cargo install --path crates/claw-cli --locked
+claw --resume session.json /status
 ```
+
+Run `claw --help` for the full command list, including agents, skills, and system-prompt flows.
 
 ## Authentication
 
-Use whichever provider you have access to.
+Configure your environment variables based on your preferred provider:
 
-Anthropic-compatible models:
+### Anthropic
 
 ```bash
 export ANTHROPIC_API_KEY="..."
 export ANTHROPIC_BASE_URL="https://api.anthropic.com"
 ```
 
-Grok models:
+### OpenAI-compatible
+
+```bash
+export OPENAI_API_KEY="..."
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+```
+
+### Grok / xAI
 
 ```bash
 export XAI_API_KEY="..."
 export XAI_BASE_URL="https://api.x.ai"
 ```
 
-You can also authenticate through the CLI:
+You can also authenticate via the CLI:
 
 ```bash
-cargo run --bin claw -- login
+claw login
 ```
 
-## Common commands
+## Frequently Asked Questions
 
-```bash
-cargo run --bin claw -- prompt "review the latest changes"
-cargo run --bin claw -- init
-cargo run --bin claw -- logout
-cargo run --bin claw -- --resume session.json /status
-```
+**What is this project?** This is an independent, open-source implementation of a terminal-based coding agent, architecturally inspired by Claude Code.
 
-Run `claw --help` for the full command list, including agents, skills, system-prompt output, and slash-command flows.
+**Why Rust?** Rust provides the performance, concurrency, and memory safety required for a tool that interacts deeply with local file systems and high-latency LLM APIs.
 
-## Repository layout
+**Can I use local models?** Yes, if your local inference server exposes an OpenAI-compatible API and you point the relevant base URL and API key at it.
 
-```text
-.
-├── rust/            # Active Rust workspace and CLI/runtime implementation
-├── src/             # Python porting workspace and support code
-├── tests/           # Python verification
-├── CLAW.md          # Repo-specific working notes
-└── README.md        # This guide
-```
+**Is this the official Anthropic Claude Code?** No, this is a community-driven open-source project.
 
 ## Development
 
-Use the Rust workspace for local verification:
+We welcome contributions. Please refer to CLAW.md for workspace-specific workflow guidance.
 
 ```bash
 cd rust
@@ -110,9 +124,14 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 ```
 
-If you change the Python workspace in `src/`, keep the matching tests in `tests/` updated too.
+## Repository Structure
+
+- `rust/`: Core CLI and runtime implementation.
+- `src/`: Python support code and utilities.
+- `tests/`: Verification suites for agentic behaviors.
+- `CLAW.md`: Internal workflow documentation.
 
 ## Notes
 
-- This repo is an open source Claude Code-style Rust implementation, not the original Claude Code source.
-- `CLAW.md` contains the workflow guidance for contributors working in this tree.
+- This project is an open-source implementation.
+- It is not affiliated with or endorsed by Anthropic.
